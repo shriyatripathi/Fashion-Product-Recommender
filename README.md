@@ -8,11 +8,14 @@ The top 2 reasons are-
 This project can give recommendations based on Contextual Understanding like “Suggest apparels I can wear for a wedding in Jaipur”
 
 Methods to find text similarity:
- ** Cosine similarity** is a measure that calculates the cosine of the angle between
+**Cosine similarity** is a measure that calculates the cosine of the angle between
   two vectors, providing a numerical value indicating how similar they are in 
-  direction regardless of their magnitude
+  direction regardless of their magnitude.
+  
 
-Python Package used for Image similarity: Huggingface(https://huggingface.co/ )
+Python Package used for Image similarity: Huggingface (https://huggingface.co/ )
+
+
 **Tech Stack:**
   •	Python
   •	NoSQL - AstraDB
