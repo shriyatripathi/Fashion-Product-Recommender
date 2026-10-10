@@ -1,26 +1,54 @@
-_The high return rate is a growing issue for apparel brands and retailers, substantially impacting revenues and costs, customer satisfaction and loyalty, as well as sustainability.
-The average return rate of online apparel orders in the US is 24.4%, Based on estimate of a total $155.8 billion online apparel and footwear market in 2023, a 
-costs in 2023. These alarming numbers indicate the need for retailers to implement loss-minimization solutions.
-The top 2 reasons are-
-•	Size/fit (53% of respondents)
-•	Color (16%)_
+# Fashion Product Recommender
 
-This project can give recommendations based on Contextual Understanding like “Suggest apparels I can wear for a wedding in Jaipur”
+A GenAI product recommender for apparel retail that supports contextual, natural-language queries such as *"Suggest apparels I can wear for a wedding in Jaipur"* — rather than keyword matching alone.
 
-Methods to find text similarity:
-**Cosine similarity** is a measure that calculates the cosine of the angle between
-  two vectors, providing a numerical value indicating how similar they are in 
-  direction regardless of their magnitude.
-  
+## Motivation
 
-Python Package used for Image similarity: Huggingface (https://huggingface.co/ )
+High return rates are a costly problem for apparel retailers, affecting revenue, customer satisfaction and sustainability. The average return rate for online apparel orders in the US is **24.4%**, against an estimated **$155.8 billion** online apparel and footwear market in 2023.
 
+The two leading causes of returns are:
 
-**Tech Stack:**
-  •	Python
-  •	NoSQL - AstraDB
-  • Data Fabric- Databricks
-  • Vector Embedding
-  
-  
+| Reason | Share of respondents |
+|---|---|
+| Size / fit | 53% |
+| Colour | 16% |
 
+Better recommendations at the point of discovery reduce the mismatch between what a customer expects and what arrives.
+
+## How it works
+
+Product descriptions are embedded into vectors and stored in a vector database, so retrieval becomes a nearest-neighbour search in semantic space instead of a literal text match.
+
+**Text similarity** uses **cosine similarity** — the cosine of the angle between two vectors. Because it measures direction rather than magnitude, two descriptions are judged similar based on meaning, independent of how long the text is.
+
+| File | Role |
+|---|---|
+| `embedding.py` | Generates embeddings with `HuggingFaceEmbedding` (`BAAI/bge-small-en-v1.5`) via LlamaIndex |
+| `astradbvector.py` | Vector store operations against DataStax AstraDB |
+| `createtables.py` | Schema / table setup |
+| `styles.csv` | Product catalogue metadata |
+| `AstraDB Vector data.xlsx`, `AstradB.xlsx` | Vector and catalogue data exports |
+
+Archived components are included as zips: `Python Code`, `Front End` and `Vector Database`.
+
+## Stack
+
+- **Python**
+- **LlamaIndex** — embedding interface
+- **Hugging Face** — `BAAI/bge-small-en-v1.5` text embeddings, and image-similarity models
+- **DataStax AstraDB** — vector storage and similarity search
+
+## Running it
+
+```bash
+pip install llama-index llama-index-embeddings-huggingface
+python embedding.py
+```
+
+AstraDB access requires your own database credentials and an application token; configure these before running `astradbvector.py` or `createtables.py`.
+
+## Notes
+
+- `bge-small-en-v1.5` is a compact English embedding model — a good speed/quality trade-off, but it will not handle non-English product text well.
+- `embedding.py` currently runs against a short hardcoded list of product descriptions as a demonstration; point it at `styles.csv` to embed the full catalogue.
+- Several components are committed as zip archives rather than extracted source, so they are not browsable or diffable on GitHub.
